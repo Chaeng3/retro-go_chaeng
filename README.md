@@ -31,8 +31,7 @@ https://www.bilibili.com/video/BV1SQJF6KEsp/?vd_source=3ac89604b734514d5955b607a
 
 ---
 
-## 📌 硬件开源地址（已参加“星火计划2026”）
-<img width="1024" height="277" alt="星火计划-透底黑" src="https://github.com/user-attachments/assets/2364c178-28e4-4ff4-a0f0-2123fbc0edbf" />
+## 📌 硬件开源地址（已参加“星火计划2026”）<img width="128" height="34.625" alt="星火计划-透底黑" src="https://github.com/user-attachments/assets/2364c178-28e4-4ff4-a0f0-2123fbc0edbf" />
 
 https://oshwhub.com/chaeng/project_jofcnupz
 
@@ -147,8 +146,3 @@ GNU General Public License v3.0 (GPLv3)
 ✔ 允许使用 / 修改 / 分发  
 ❗ 必须开源衍生代码  
 ❗ 必须保留原始版权信息  
-
----
-- WiFi 联机功能  
-- AI 语音扩展  
-- 性能优化  
