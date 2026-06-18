@@ -31,7 +31,7 @@ https://www.bilibili.com/video/BV1SQJF6KEsp/?vd_source=3ac89604b734514d5955b607a
 
 ---
 
-## 📌 硬件开源地址（已参加“星火计划2026”）<img width="128" height="34.625" alt="星火计划-透底黑" src="https://github.com/user-attachments/assets/2364c178-28e4-4ff4-a0f0-2123fbc0edbf" />
+## 📌 硬件开源地址（已参加<img width="128" height="34.625" alt="星火计划-透底黑" src="https://github.com/user-attachments/assets/2364c178-28e4-4ff4-a0f0-2123fbc0edbf" />2026
 
 https://oshwhub.com/chaeng/project_jofcnupz
 
