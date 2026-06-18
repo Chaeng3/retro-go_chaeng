@@ -1,0 +1,104 @@
+{
+	"folders": [
+		{
+			"path": "components"
+		},
+		{
+			"path": "fmsx"
+		},
+		{
+			"path": "gwenesis"
+		},
+		{
+			"path": "launcher"
+		},
+		{
+			"path": "prboom-go"
+		},
+		{
+			"path": "retro-core"
+		},
+		{
+			"path": "themes"
+		},
+		{
+			"path": "tools"
+		},
+		{
+			"path": ".",
+			"name": "root"
+		}
+	],
+	"settings": {
+		/*
+		For C_cpp to work you must add these variables to your vs code config:
+		(This isn't ideal but I can't think of a better way...)
+
+		"retro-go.sdk-path": "/path/to/esp-idf/frameworks/esp-idf-v4.1.2",
+		"retro-go.tools-path": "/path/to/esp-idf/tools/xtensa-esp32-elf/esp-2020r3-8.4.0/xtensa-esp32-elf",
+		*/
+
+		"C_Cpp.default.defines": [
+			"RETRO_GO",
+			"CONFIG_FREERTOS_HZ=100",
+			"CONFIG_TCPIP_LWIP=1",
+			"RG_ENABLE_NETPLAY=",
+			"RG_ENABLE_NETWORKING=",
+			"RTC_NOINIT_ATTR=",
+			"ESP_PLATFORM="
+		],
+		"C_Cpp.default.includePath": [
+			"${workspaceFolder}/components/**",
+			"${workspaceFolder}/../components/**",
+			"${config:retro-go.sdk-path}/components/**",
+			"${config:retro-go.tools-path}/include/**"
+		],
+		"C_Cpp.default.forcedInclude": [
+			"${workspaceFolder}/build/config/sdkconfig.h",
+			"${workspaceFolder}/build/sdkconfig.h",
+		],
+		"C_Cpp.default.compilerPath": "${config:retro-go.tools-path}/bin/xtensa-esp32-elf-g++.exe",
+		"C_Cpp.default.cStandard": "c11",
+		"C_Cpp.default.cppStandard": "c++11",
+		"C_Cpp.default.intelliSenseMode": "gcc-x86",
+		"cSpell.words": [
+			"apll",
+			"coleco",
+			"espressif",
+			"gnuboy",
+			"gpio",
+			"gwenesis",
+			"iram",
+			"mkfw",
+			"mkimg",
+			"MOSI",
+			"MRGC",
+			"NOINIT",
+			"newboy",
+			"newfrendo",
+			"ngpocket",
+			"nofrendo",
+			"odroid",
+			"prboom",
+			"sdmmc",
+			"sdspi",
+			"smsplusgx",
+			"snes",
+			"sram",
+			"tcpip",
+			"wrover",
+			"xtensa"
+		],
+		"files.trimTrailingWhitespace": true,
+		"files.exclude": {
+			"**/build": true,
+			"root": true
+		},
+		"files.watcherExclude": {
+			"**/build/**": true,
+		},
+		"clangd.arguments": [
+			"--compile-commands-dir=${workspaceFolder}/build"
+		],
+	}
+}
