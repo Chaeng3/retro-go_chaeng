@@ -62,10 +62,12 @@
 }
 
 // Battery (BAT = GPIO4 → ADC1_CH3)
+// 3.50V → 0%, 4.15V → 100%. Using 4.15V (not 4.20V) so a charged pack
+// still reads full under load / ADC error; chargers often stop near 4.1x V.
 #define RG_BATTERY_DRIVER           1
 #define RG_BATTERY_ADC_UNIT         ADC_UNIT_1
 #define RG_BATTERY_ADC_CHANNEL      ADC_CHANNEL_3
-#define RG_BATTERY_CALC_PERCENT(raw) (((raw) * 2.f - 3500.f) / (4200.f - 3500.f) * 100.f)
+#define RG_BATTERY_CALC_PERCENT(raw) (((raw) * 2.f - 3500.f) / (4150.f - 3500.f) * 100.f)
 #define RG_BATTERY_CALC_VOLTAGE(raw) ((raw) * 2.f * 0.001f)
 
 // XL-2020RGBC-2812B (WS2812) on GPIO38 — RMT, GRB order

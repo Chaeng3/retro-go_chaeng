@@ -585,7 +585,10 @@ void rg_gui_draw_icons(void)
 
         int width = 16;
         int height = icon_height;
-        int width_fill = width / 100.f * battery.level;
+        // Round so near-full (e.g. 97%+) fills the icon instead of truncating short
+        int width_fill = (int)(width / 100.f * battery.level + 0.5f);
+        if (width_fill > width)
+            width_fill = width;
         int x_pos = -right;
         int y_pos = icon_top;
 
