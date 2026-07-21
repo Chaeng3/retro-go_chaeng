@@ -1352,12 +1352,21 @@ bool rg_emu_save_state(uint8_t slot)
         }
     }
 
+    // Some FAT stacks fail rename() on non-ASCII paths (e.g. Chinese book names).
+    // Fall back to writing the final path directly.
+    if (!success && (*app.handlers.saveState)(filename))
+    {
+        remove(tempname(".new"));
+        remove(tempname(".bak"));
+        success = true;
+    }
+
     if (!success)
     {
         RG_LOGE("Save failed!\n");
         rename(filename, tempname(".bak"));
         remove(tempname(".new"));
-        rg_gui_alert("Save failed", NULL);
+        rg_gui_alert(_("Save failed"), NULL);
     }
     else
     {

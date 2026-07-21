@@ -3,6 +3,16 @@ __pycache__/
 .cache/
 .vscode/
 build/
+*.log
+
+# Large font sources (regenerate with tools/gen_*.py)
+/tools/fonts/*.ttf
+/tools/fonts/*.otf
+/tools/fonts/*.hex
+/tools/fonts/*.gz
+/tools/fonts/*.zip
+/tools/fonts/tmp-*/
+/tools/fonts/fusion-otf/
 
 # ESP32 build
 /partitions.bin

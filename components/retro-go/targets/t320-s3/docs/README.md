@@ -37,3 +37,25 @@ Firmware image: **`retro-go_chaeng_t320-s3.img`**
 ```
 
 Display tuning: change `RG_SCREEN_ROTATION` (0–7) and `RG_SCREEN_RGB_BGR` (0/1) in `config.h`. Current: rotation `5` → MADCTL `0xA0` (MY|MV|BGR).
+
+## E-Book (TXT)
+
+Put UTF-8 `.txt` files on the SD card under `roms/txt/`.  
+Reading progress: `retro-go/saves/txt/*.sav`  
+Bookmarks: `retro-go/saves/txt/*.bmk` (up to 8; via Options → Emulator options)
+
+### Reader controls
+
+| Key | Action |
+|-----|--------|
+| Menu | Game menu (unchanged) |
+| Option / Settings | Options menu (unchanged) |
+| Up / A | Previous page |
+| Down / B | Next page |
+| Select | Larger font (native 16→20→24, no stretch) |
+| Start | Smaller font |
+
+Text uses the full 320×240 area (TXT line breaks preserved).  
+Percentage is shown centered at the bottom.  
+Reader uses **Source Han Sans SC** rasterized at native **16 / 20 / 24px** (no bitmap upscaling).  
+Supports **UTF-8 and GBK/GB2312** text files.

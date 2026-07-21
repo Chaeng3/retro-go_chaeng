@@ -14,16 +14,17 @@ import zlib
 DEFAULT_TARGET = os.getenv("RG_TOOL_TARGET", "odroid-go")
 DEFAULT_BAUD = os.getenv("RG_TOOL_BAUD", "1152000")
 DEFAULT_PORT = os.getenv("RG_TOOL_PORT", "COM3")
-DEFAULT_APPS = os.getenv("RG_TOOL_APPS", "launcher retro-core prboom-go gwenesis fmsx")
+DEFAULT_APPS = os.getenv("RG_TOOL_APPS", "launcher retro-core prboom-go gwenesis fmsx txt-reader")
 PROJECT_NAME = os.getenv("PROJECT_NAME", "Retro-Go")
 PROJECT_ICON = os.getenv("PROJECT_ICON", "assets/icon.raw")
 PROJECT_APPS = {
   # Project name  Type, SubType, Size
-  'launcher':     [0, 16, 1048576],
+  'launcher':     [0, 16, 1572864],
   'retro-core':   [0, 16, 1048576],
   'prboom-go':    [0, 16, 786432],
   'gwenesis':     [0, 16, 1048576],
   'fmsx':         [0, 16, 589824],
+  'txt-reader':   [0, 16, 5242880],
 }
 # PROJECT_APPS = {}
 # for t in glob.glob("*/CMakeLists.txt"):
@@ -123,7 +124,7 @@ def build_app(app, device_type, with_profiling=False, no_networking=False, is_re
     args.append(f"-DRG_ENABLE_NETWORKING={0 if no_networking else 1}")
     with open("partitions.csv", "w") as f:
         f.write("# This table isn't used, it's just needed to avoid esp-idf build failures.\n")
-        f.write("dummy, app, ota_0, 65536, 3145728\n")
+        f.write("dummy, app, ota_0, 65536, 8388608\n")
     run(args, cwd=os.path.join(os.getcwd(), app))
     print("Done.\n")
 

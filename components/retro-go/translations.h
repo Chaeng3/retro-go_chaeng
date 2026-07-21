@@ -692,6 +692,12 @@ static const char *translations[][RG_LANG_MAX] =
         [RG_LANG_DE] = "Geschwindigkeit",
         [RG_LANG_CHS] = "速度",
     },
+    {
+        [RG_LANG_EN] = "Overclock",
+        [RG_LANG_FR] = "Overclock",
+        [RG_LANG_DE] = "Übertaktung",
+        [RG_LANG_CHS] = "超频",
+    },
 
     // about menu
     {
@@ -767,6 +773,24 @@ static const char *translations[][RG_LANG_MAX] =
         [RG_LANG_FR] = "Emplacement 3",
         [RG_LANG_DE] = "Speicherplatz 3",
         [RG_LANG_CHS] = "存档位3",
+    },
+    {
+        [RG_LANG_EN] = "Slot %d",
+        [RG_LANG_FR] = "Emplacement %d",
+        [RG_LANG_DE] = "Speicherplatz %d",
+        [RG_LANG_CHS] = "存档位%d",
+    },
+    {
+        [RG_LANG_EN] = "Slot %d (last used)",
+        [RG_LANG_FR] = "Emplacement %d (dernier)",
+        [RG_LANG_DE] = "Speicherplatz %d (zuletzt)",
+        [RG_LANG_CHS] = "存档位%d (上次使用)",
+    },
+    {
+        [RG_LANG_EN] = "Slot %d is empty",
+        [RG_LANG_FR] = "Emplacement %d vide",
+        [RG_LANG_DE] = "Speicherplatz %d ist leer",
+        [RG_LANG_CHS] = "存档位%d 为空",
     },
 
     // game menu
@@ -1226,4 +1250,102 @@ static const char *translations[][RG_LANG_MAX] =
         [RG_LANG_CHS] = "保存失败",
     },
     // end of rg_system.c
+
+    // txt-reader (E-Book)
+    {
+        [RG_LANG_EN] = "E-Book",
+        [RG_LANG_FR] = "E-Book",
+        [RG_LANG_DE] = "E-Book",
+        [RG_LANG_CHS] = "电子书",
+    },
+    {
+        [RG_LANG_EN] = "Save bookmark",
+        [RG_LANG_FR] = "Sauver signet",
+        [RG_LANG_DE] = "Lesezeichen speichern",
+        [RG_LANG_CHS] = "保存书签",
+    },
+    {
+        [RG_LANG_EN] = "Load bookmark",
+        [RG_LANG_FR] = "Charger signet",
+        [RG_LANG_DE] = "Lesezeichen laden",
+        [RG_LANG_CHS] = "读取书签",
+    },
+    {
+        [RG_LANG_EN] = "Bookmarks",
+        [RG_LANG_FR] = "Signets",
+        [RG_LANG_DE] = "Lesezeichen",
+        [RG_LANG_CHS] = "书签",
+    },
+    {
+        [RG_LANG_EN] = "Saved.",
+        [RG_LANG_FR] = "Enregistré.",
+        [RG_LANG_DE] = "Gespeichert.",
+        [RG_LANG_CHS] = "已保存",
+    },
+    {
+        [RG_LANG_EN] = "Slot is empty",
+        [RG_LANG_FR] = "Emplacement vide",
+        [RG_LANG_DE] = "Speicherplatz leer",
+        [RG_LANG_CHS] = "槽位为空",
+    },
+    {
+        [RG_LANG_EN] = "Load failed",
+        [RG_LANG_FR] = "Échec du chargement",
+        [RG_LANG_DE] = "Laden fehlgeschlagen",
+        [RG_LANG_CHS] = "读取失败",
+    },
+    {
+        [RG_LANG_EN] = "No file selected.",
+        [RG_LANG_FR] = "Aucun fichier sélectionné.",
+        [RG_LANG_DE] = "Keine Datei ausgewählt.",
+        [RG_LANG_CHS] = "未选择文件",
+    },
+    {
+        [RG_LANG_EN] = "Failed to open file.",
+        [RG_LANG_FR] = "Échec d'ouverture.",
+        [RG_LANG_DE] = "Datei öffnen fehlgeschlagen.",
+        [RG_LANG_CHS] = "打开文件失败",
+    },
+    {
+        [RG_LANG_EN] = "Slot %d  (empty)",
+        [RG_LANG_FR] = "Emplacement %d  (vide)",
+        [RG_LANG_DE] = "Speicherplatz %d  (leer)",
+        [RG_LANG_CHS] = "存档位%d  (空)",
+    },
+    {
+        [RG_LANG_EN] = "Slot %d  %d%%",
+        [RG_LANG_FR] = "Emplacement %d  %d%%",
+        [RG_LANG_DE] = "Speicherplatz %d  %d%%",
+        [RG_LANG_CHS] = "存档位%d  %d%%",
+    },
+    {
+        [RG_LANG_EN] = "Jump to start",
+        [RG_LANG_FR] = "Aller au début",
+        [RG_LANG_DE] = "Zum Anfang",
+        [RG_LANG_CHS] = "跳到开头",
+    },
+    {
+        [RG_LANG_EN] = "Jump 25%",
+        [RG_LANG_FR] = "Aller à 25%",
+        [RG_LANG_DE] = "Zu 25%",
+        [RG_LANG_CHS] = "跳到 25%",
+    },
+    {
+        [RG_LANG_EN] = "Jump 50%",
+        [RG_LANG_FR] = "Aller à 50%",
+        [RG_LANG_DE] = "Zu 50%",
+        [RG_LANG_CHS] = "跳到 50%",
+    },
+    {
+        [RG_LANG_EN] = "Jump 75%",
+        [RG_LANG_FR] = "Aller à 75%",
+        [RG_LANG_DE] = "Zu 75%",
+        [RG_LANG_CHS] = "跳到 75%",
+    },
+    {
+        [RG_LANG_EN] = "Jump to end",
+        [RG_LANG_FR] = "Aller à la fin",
+        [RG_LANG_DE] = "Zum Ende",
+        [RG_LANG_CHS] = "跳到结尾",
+    },
 };

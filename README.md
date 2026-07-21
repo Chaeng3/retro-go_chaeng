@@ -43,6 +43,7 @@ https://oshwhub.com/chaeng/project_jofcnupz
 - ESP32-S3 双核高性能主控
 - 3.2 寸 TFT LCD（SPI，320×240）
 - SD 卡游戏加载
+- TXT 电子书阅读（`roms/txt/*.txt`，UTF-8/GBK，书签存档与游戏逻辑一致）
 - I2S 数字音频输出
 - 完整按键控制系统
 - 可编程 WS2812 RGB 状态灯（默认蓝色）

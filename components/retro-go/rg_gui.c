@@ -262,6 +262,34 @@ bool rg_gui_set_font(int index)
     return true;
 }
 
+bool rg_gui_set_font_ptr(const rg_font_t *font)
+{
+    if (!font)
+        return false;
+    gui.font = font;
+    gui.font_index = -1;
+    gui.font_height = font->height;
+    RG_LOGI("Custom font set to: %s (height=%d)\n", font->name, gui.font_height);
+    return true;
+}
+
+bool rg_gui_set_font_height(int height)
+{
+    if (!gui.font || height < 8 || height > 32)
+        return false;
+    // Glyph bitmaps are packed into uint32_t rows — keep scaled width in range.
+    int base_w = gui.font->width ? gui.font->width : 12;
+    if (base_w * height / RG_MAX(1, gui.font->height) > 32)
+        return false;
+    gui.font_height = height;
+    return true;
+}
+
+int rg_gui_get_font_height(void)
+{
+    return gui.font_height;
+}
+
 void rg_gui_set_surface(rg_surface_t *surface)
 {
     gui.screen_buffer = surface ? surface->data : NULL;
@@ -324,18 +352,45 @@ static size_t get_glyph(uint32_t *output, const rg_font_t *font, int points, int
     if (points <= 0)
         points = font->height;
 
-    const uint8_t *ptr = font->data;
-    const rg_font_glyph_t *glyph = (rg_font_glyph_t *)ptr;
-    // for (size_t i = 0; i < font->chars && glyph->code && glyph->code != c; ++i)
-    while (glyph->code && glyph->code != c)
+    const rg_font_glyph_t *glyph = NULL;
+
+    if (font->offsets && font->chars > 0)
     {
-        if (glyph->width != 0)
-            ptr += (((glyph->width * glyph->height) - 1) / 8) + 1;
-        ptr += sizeof(rg_font_glyph_t);
-        glyph = (rg_font_glyph_t *)ptr;
+        // Binary search over sorted codepoints (needed for large ebook fonts).
+        int lo = 0, hi = (int)font->chars - 1;
+        while (lo <= hi)
+        {
+            int mid = (lo + hi) / 2;
+            const rg_font_glyph_t *g = (const rg_font_glyph_t *)(font->data + font->offsets[mid]);
+            if (g->code == (uint16_t)c)
+            {
+                glyph = g;
+                break;
+            }
+            if (g->code < (uint16_t)c)
+                lo = mid + 1;
+            else
+                hi = mid - 1;
+        }
+    }
+    else
+    {
+        const uint8_t *ptr = font->data;
+        glyph = (const rg_font_glyph_t *)ptr;
+        while (glyph->code && glyph->code != (uint16_t)c)
+        {
+            if (glyph->width != 0)
+                ptr += (((glyph->width * glyph->height) - 1) / 8) + 1;
+            ptr += sizeof(rg_font_glyph_t);
+            glyph = (const rg_font_glyph_t *)ptr;
+        }
+        if (!glyph->code)
+            glyph = NULL;
+        else if (glyph->code != (uint16_t)c)
+            glyph = NULL;
     }
 
-    if (glyph && glyph->code == c) // Glyph found
+    if (glyph && glyph->code == (uint16_t)c) // Glyph found
     {
         // Based on code by Boris Lovosevic (https://github.com/loboris)
         int yOffset = glyph->yOffset;
@@ -344,9 +399,22 @@ static size_t get_glyph(uint32_t *output, const rg_font_t *font, int points, int
         int xOffset = glyph->xOffset < 0x80 ? glyph->xOffset : -(0xFF - glyph->xOffset);
         int xDelta = glyph->xDelta;
         const uint8_t *data = glyph->data;
+        int native_advance = RG_MAX(width, xDelta);
+        int scaled_advance = native_advance;
+
+        if (points != font->height)
+        {
+            float scale = (float)points / font->height;
+            scaled_advance = RG_MAX(1, (int)(native_advance * scale + 0.5f));
+            if (scaled_advance > 32)
+                scaled_advance = 32;
+        }
+
         if (output)
         {
-            memset(output, 0, points * 4);
+            uint32_t native[64];
+            int native_rows = RG_MIN((int)RG_COUNT(native), RG_MAX(font->height, yOffset + height));
+            memset(native, 0, sizeof(native));
             int ch = 0, mask = 0x80;
             for (int y = 0; y < height; y++)
             {
@@ -358,21 +426,43 @@ static size_t get_glyph(uint32_t *output, const rg_font_t *font, int points, int
                         mask = 0x80;
                         ch = *data++;
                     }
-                    if ((ch & mask) != 0)
-                        row |= (1 << (xOffset + x));
+                    if ((ch & mask) != 0 && (xOffset + x) >= 0 && (xOffset + x) < 32)
+                        row |= (1u << (xOffset + x));
                     mask >>= 1;
                 }
-                output[yOffset + y] = row;
+                int dy = yOffset + y;
+                if (dy >= 0 && dy < native_rows)
+                    native[dy] = row;
             }
-            // Vertical stretching
-            if (points != font->height)
+
+            memset(output, 0, points * 4);
+            if (points == font->height)
+            {
+                memcpy(output, native, points * sizeof(uint32_t));
+            }
+            else
             {
                 float scale = (float)points / font->height;
-                for (int y = points - 1; y >= 0; y--)
-                    output[y] = output[(int)(y / scale)];
+                for (int y = 0; y < points; y++)
+                {
+                    int src_y = (int)(y / scale);
+                    if (src_y < 0)
+                        src_y = 0;
+                    if (src_y >= native_rows)
+                        src_y = native_rows - 1;
+                    uint32_t src_row = native[src_y];
+                    uint32_t dst_row = 0;
+                    for (int x = 0; x < scaled_advance; x++)
+                    {
+                        int src_x = (int)(x / scale);
+                        if (src_x >= 0 && src_x < 32 && ((src_row >> src_x) & 1))
+                            dst_row |= (1u << x);
+                    }
+                    output[y] = dst_row;
+                }
             }
         }
-        return RG_MAX(width, xDelta);
+        return scaled_advance;
     }
     // else if (font != &font_basic8x8) // Glyph not found, try fallback font
     // {
@@ -381,10 +471,14 @@ static size_t get_glyph(uint32_t *output, const rg_font_t *font, int points, int
     else // Glyph not found, no fallback
     {
         size_t box_width = font->width ?: 8;
+        if (points != font->height)
+            box_width = RG_MAX(1, (size_t)(box_width * (float)points / font->height + 0.5f));
+        if (box_width > 32)
+            box_width = 32;
         if (output) // draw missing box
         {
-            uint32_t mask = ~((0xFFFFFFFF << (box_width - 1)) | 1);
-            for (size_t i = 0; i < points; ++i)
+            uint32_t mask = ~((0xFFFFFFFFu << (box_width - 1)) | 1u);
+            for (size_t i = 0; i < (size_t)points; ++i)
                 output[i] = (0xAAAAAAAA << (i & 1)) & mask;
         }
         return box_width;
@@ -2252,13 +2346,13 @@ static rg_gui_event_t slot_select_cb(rg_gui_option_t *option, rg_gui_event_t eve
         {
             preview = rg_surface_load_image_file(slot->preview, 0);
             if (slot->is_lastused)
-                snprintf(buffer, sizeof(buffer), "Slot %d (last used)", slot->id);
+                snprintf(buffer, sizeof(buffer), _("Slot %d (last used)"), slot->id);
             else
-                snprintf(buffer, sizeof(buffer), "Slot %d", slot->id);
+                snprintf(buffer, sizeof(buffer), _("Slot %d"), slot->id);
         }
         else
         {
-            snprintf(buffer, sizeof(buffer), "Slot %d is empty", slot->id);
+            snprintf(buffer, sizeof(buffer), _("Slot %d is empty"), slot->id);
             color = C_RED;
         }
         rg_gui_draw_image(0, margin, gui.screen_width, gui.screen_height - margin * 2, true, preview);

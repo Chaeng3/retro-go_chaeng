@@ -64,6 +64,7 @@ typedef struct
     uint8_t width;  // median width of glyphs
     uint8_t height; // height of tallest glyph
     size_t  chars;  // glyph count
+    const uint32_t *offsets; // optional: sorted glyph byte offsets into data (NULL = linear scan)
     uint8_t data[]; // stream of rg_font_glyph_t (end of list indicated by an entry with 0x0000 codepoint)
 } rg_font_t;
 
@@ -109,6 +110,9 @@ void rg_gui_update_geometry(void);
 bool rg_gui_set_language_id(int index);
 void rg_gui_set_surface(rg_surface_t *surface);
 bool rg_gui_set_font(int index);
+bool rg_gui_set_font_ptr(const rg_font_t *font);
+bool rg_gui_set_font_height(int height);
+int rg_gui_get_font_height(void);
 bool rg_gui_set_theme(const char *name);
 const char *rg_gui_get_theme_name(void);
 rg_image_t *rg_gui_get_theme_image(const char *name);

@@ -1,3 +1,14 @@
+# Retro-Go Chaeng 2.0.7 (2026-07-22)
+- E-Book: 新增 TXT 电子书应用（启动器中作为独立机种，每本书相当于一个 ROM）
+- E-Book: 支持 UTF-8 / GBK 自动识别，霞鹜文楷多字号阅读
+- E-Book: 书目菜单与游戏一致（继续游戏 / 新游戏 / 删除存档）
+- E-Book: 阅读中菜单键、设置键与模拟器相同（存档槽 / 系统选项）
+- E-Book: 上/A 上一页，下/B 下一页；左/右按 5% 进度跳转；选择/开始调节字号
+- E-Book: 中文书名存档路径兼容（rename 失败时回退直接写入）
+- Launcher: 完善 FusionPixel UI 字库（完整 GB2312），修复中文书名缺字
+- All: 补充存档槽预览、超频等中文翻译
+
+
 # Retro-Go 1.46 (2025-11-07)
 - Launcher: Added virtual keyboard to manage wifi networks
 - Launcher: Diacritics are now correctly shown in filenames
