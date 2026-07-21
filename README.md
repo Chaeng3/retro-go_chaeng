@@ -146,6 +146,8 @@ retro-go_chaeng port
   <img width="4000" height="2252" alt="20260614_092856" src="https://github.com/user-attachments/assets/da6b5e10-d566-4c00-b279-9d6e204d3767" />
   <img width="4000" height="2252" alt="20260614_093534" src="https://github.com/user-attachments/assets/cb81de19-9f16-447e-9382-b8fb90c6e463" />
   <img width="4000" height="2252" alt="20260614_091542" src="https://github.com/user-attachments/assets/de9b2670-cbf5-4292-be99-fa3f13dae714" />
+  <img width="1180" height="947" alt="装配" src="https://github.com/user-attachments/assets/b208e758-667f-4546-b454-8a5a0fa06e34" />
+
 </p>
 
 ---
