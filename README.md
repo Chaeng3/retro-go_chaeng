@@ -27,6 +27,11 @@ Retro-Go 中文硬件扩展版本（chaeng 定制）
 
 ## 🆕 最新更新 · Chaeng 2.0.7（2026-07-22）
 
+<p align="center">
+  <img width="2273" height="1279" alt="微信图片_20260722063755_10_2" src="https://github.com/user-attachments/assets/59c66b15-5d0b-4dad-9b80-26df3de1b48b" />
+</p>
+
+
 - **电子书**：新增 TXT 阅读应用，启动器中作为独立机种，每本书相当于一个 ROM（`roms/txt/*.txt`）
 - **编码与字体**：UTF-8 / GBK 自动识别，霞鹜文楷多字号阅读
 - **书目菜单**：与游戏一致 — 继续游戏 / 新游戏 / 删除存档
